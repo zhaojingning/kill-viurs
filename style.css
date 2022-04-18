@@ -172,6 +172,32 @@ body {
     top: 10px;
     box-shadow: 0 0 15px #f00;
 }
+/* 警告页面 */
+。warning {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: linear-gradient(to right, rgba(255, 0, 0, .5) 0%,
+    rgba(255, 0, 0, 0) 20%,
+    rgba(0, 0, 0, 0) 80%,
+    rgba(255, 0, 0, .5) 100%) !important;
+    z-index: 10;
+    animation: color-fade 0.5s 3;
+    opacity: 0;
+}
+/* 警告动画 */
+@keyframes color-fade {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+    
+}
 
 /* 病毒消失的动画 */
 fade-out {
