@@ -38,9 +38,64 @@ startAlert.onclick = function() {
 var timer, updater;
 function startGame() {
     // 定时生成病毒
-
+    timer = setInterval(function() {
+        makeVirus();
+    }, config.interval);
 
     // 定时更新
- 
+  
+}
+
+// 游戏区
+let game = document.querySelector('#game');
+// 获得游戏场景
+let stage = document.querySelector('#stage');
+// ui 层
+let uiLayer = document.querySelector('#ui');
+// 病毒集合
+let virues = [];
+
+// 生成病毒元素
+function makeVirus() {
+    let virus = document.createElement('div');
+    virus.setAttribute('class', 'virus');
+
+    let p = document.createElement('p');
+    p.classList.add('letter');
+
+    virus.appendChild(p);
+
+    // 设置病毒的颜色
+    switch (Math.floor.apply(Math.random() * 6)) {
+        case 0:
+            p.style.backgroundImage = 'radial-gradient(rgba(255,150,150,0),rgba(255,0,0,1))';
+            p.style.boxShadow = '0 0 15px #f00';break;
+        case 1:
+            p.style.backgroundImage = 'radial-gradient(rgba(0, 255, 0, 0),rgba(0,255,0,1))';
+            p.style.boxShadow = '0 0 15px #f00'; break;
+        case 2:
+            p.style.backgroundImage = 'radial-gradient(rgba(0, 0, 255, 0),rgba(0,0,255,1))';
+            p.style.boxShadow = '0 0 15px #f00'; break;
+        case 3:
+            p.style.backgroundImage = 'radial-gradient(rgba(255, 255, 0, 0),rgba(255,255,0,1))';
+            p.style.boxShadow = '0 0 15px #f00'; break;
+        case 4:
+            p.style.backgroundImage = 'radial-gradient(rgba(0, 255, 255, 0),rgba(0,255,255,1))';
+            p.style.boxShadow = '0 0 15px #f00'; break;
+        case 5:
+            p.style.backgroundImage = 'radial-gradient(rgba(255, 0, 255, 0),rgba(255,0,255,1))';
+            p.style.boxShadow = '0 0 15px #f00'; break;
+    }
+
+    let letter = letters[Math.floor(Math.random() * 26)];
+    p.innerHTML = letter;
+
+    virus.style.left = Math.random() * (stage.offsetWidth - 100) + 'px';
+    virus.letter = letter;
+
+    // 把病毒追加到game区域
+    game.appendChild(virus);
+    // 把生成的病毒放到集合数组中
+    virues.push(virus);
 }
 
