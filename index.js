@@ -43,7 +43,9 @@ function startGame() {
     }, config.interval);
 
     // 定时更新
-  
+    updater = setInterval(() => {
+        updater()
+    }, 16);
 }
 
 // 游戏区
@@ -99,3 +101,24 @@ function makeVirus() {
     virues.push(virus);
 }
 
+let winH = stage.offsetHeight;
+// 更新动画，刷新元素的位置
+function update() {
+    for(let i=0; i < virues.length; i++) {
+        let virus = virues[i];
+        virus.style.top = virus.offsetTop + config.speed + 'px';
+
+        if(virus.offsetTop > (winH - 200 ) && !uiLayer.warning) {
+            showWarning();
+            uiLayer.warning = true;
+        } else if(virus.offsetTop >= winH) {
+            gameOver();
+        }
+    }
+}
+
+function showWarning() {
+    let warningLayer = document.createElement('div');
+    warningLayer.setAttribute('class', 'warning');
+    uiLayer.appendChild(warningLayer);
+}
