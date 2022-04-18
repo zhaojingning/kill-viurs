@@ -44,7 +44,7 @@ function startGame() {
 
     // 定时更新
     updater = setInterval(() => {
-        updater()
+        update()
     }, 16);
 }
 
@@ -67,8 +67,9 @@ function makeVirus() {
 
     virus.appendChild(p);
 
+
     // 设置病毒的颜色
-    switch (Math.floor.apply(Math.random() * 6)) {
+    switch(Math.floor(Math.random() * 6)) {
         case 0:
             p.style.backgroundImage = 'radial-gradient(rgba(255,150,150,0),rgba(255,0,0,1))';
             p.style.boxShadow = '0 0 15px #f00';break;
@@ -88,6 +89,7 @@ function makeVirus() {
             p.style.backgroundImage = 'radial-gradient(rgba(255, 0, 255, 0),rgba(255,0,255,1))';
             p.style.boxShadow = '0 0 15px #f00'; break;
     }
+
 
     let letter = letters[Math.floor(Math.random() * 26)];
     p.innerHTML = letter;
@@ -122,3 +124,44 @@ function showWarning() {
     warningLayer.setAttribute('class', 'warning');
     uiLayer.appendChild(warningLayer);
 }
+
+let gameOverAlert = document.querySelector('#game-over-alert');
+// 游戏结束
+function gameOver() {
+    clearInterval(timer);
+    clearInterval(updater);
+    config.status = 2;
+    gameOverAlert.style.display = 'block';
+}
+
+let scoreLabel = document.getElementById('score-label');
+let xmEffect = document.querySelector('#xm');
+
+// 监听键盘事件
+window.addEventListener('keyup', function(e) {
+    let key = e.key;
+    for(let i = 0; i < virues.length; i++ ) {
+        let virus = virues[i];
+        if(virus.letter.toLowerCase() === key.toLocaleLowerCase() && config.status === 1) {
+            // 切换病毒
+            let dieImg = document.createElement('img');
+            game.appendChild(dieImg);
+            dieImg.src = './imgs/virus-die.png';
+            dieImg.style.position = 'absolute';
+            dieImg.style.left = virus.offsetLeft + 'px';
+            dieImg.style.top = virus.offsetTop + 'px';
+            dieImg.classList.add('fade-out');
+
+            setTimeout(() => {
+                game.removeChild(dieImg);
+            }, 1000);
+            game.removeChild(virus);
+            virues.splice(i, 1);
+    
+            score++;
+            scoreLabel.innerHTML = score;
+        } 
+
+        
+    }
+})

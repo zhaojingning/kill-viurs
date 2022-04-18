@@ -172,3 +172,9 @@ body {
     top: 10px;
     box-shadow: 0 0 15px #f00;
 }
+
+/* 病毒消失的动画 */
+fade-out {
+    opacity: 0;
+    transition: opacity 1s;
+}
